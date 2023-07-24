@@ -38,12 +38,10 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
           REMOTE_HOST: ${{ secrets.DEPLOY_HOST }}
-          REMOTE_USER: ${{ secrets.DEPLOY_USER }}
-          REMOTE_PORT: ${{ secrets.DEPLOY_PORT }}
         run: |
-          echo "$DEPLOY_KEY" > ~/ssh_private_key
-          chmod 400 ~/ssh_private_key
-          ssh -i ~/ssh_private_key -o StrictHostKeyChecking=no ubuntu@$DEPLOY_HOST '
+          echo "$SSH_PRIVATE_KEY" > ~/ssh/ssh_private_key
+          chmod 400 ~/ssh/ssh_private_key
+          ssh -i ~/ssh/ssh_private_key -o StrictHostKeyChecking=no ubuntu@REMOTE_HOST '
 
             docker login ${{ env.REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} --password ${{ secrets.REGISTRY_TOKEN }}
             docker stop frontend 2>/dev/null;
