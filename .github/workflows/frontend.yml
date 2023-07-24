@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - frontend.yml
 env:
   REGISTRY: ghcr.io
 jobs:
@@ -41,11 +43,11 @@ jobs:
         run: |
           echo "$DEPLOY_KEY" > ~/ssh/ssh_private_key
           chmod 400 ~/ssh/ssh_private_key
-          ssh -i ~/ssh/ssh_private_key -o StrictHostKeyChecking=no ubuntu@$DEPLOY_HOST
+          ssh -i ~/ssh/ssh_private_key -o StrictHostKeyChecking=no ubuntu@$DEPLOY_HOST "
           docker login ${{ env.REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} --password ${{ secrets.REGISTRY_TOKEN }}
           docker stop frontend 2>/dev/null;
           docker rm -f frontend 2>/dev/null;
-          docker run -d -p 3000:3000 --name frontend $bc26-frontend:${{ github.sha }}
+          docker run -d -p 3000:3000 --name frontend $bc26-frontend:${{ github.sha }} "
 
           
           
