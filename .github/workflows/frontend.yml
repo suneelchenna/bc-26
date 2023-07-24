@@ -41,7 +41,7 @@ jobs:
         run: |
           echo "$SSH_PRIVATE_KEY" > ~/ssh_private_key
           chmod 400 ~/ssh_private_key
-          ssh -i ~/ssh_private_key -o StrictHostKeyChecking=no ubuntu@REMOTE_HOST '
+          ssh -i ~/ssh_private_key -o StrictHostKeyChecking=no ubuntu@$REMOTE_HOST '
 
             docker login ${{ env.REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} --password ${{ secrets.REGISTRY_TOKEN }}
             docker stop frontend 2>/dev/null;
