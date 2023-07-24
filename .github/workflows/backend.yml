@@ -44,6 +44,7 @@ jobs:
 
             docker login ${{ env.REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} --password ${{ secrets.REGISTRY_TOKEN }}
             docker stop backend 2>/dev/null;
+            docker rm backend 2>/dev/null;
             docker run -d -p 8080:8080 --network host --name backend ghcr.io/suneelchenna/bc26-backend:${{ github.sha }} 
             '
 
