@@ -31,7 +31,6 @@ jobs:
         run: docker build  -t ${{ env.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc61-backend:${{ github.sha }} .
       - name: pushing image to github package
         run: docker push ${{ env.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc61-backend:${{ github.sha }}
-
       - name: ssh connect to ec2 server
         env:
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
