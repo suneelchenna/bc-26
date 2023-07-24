@@ -1,5 +1,5 @@
 ---
-name: deploy on aws ec2 backend
+name: deploy on aws instance backend
 on:
   push:
     branches:
