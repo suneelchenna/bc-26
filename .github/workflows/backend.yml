@@ -1,5 +1,5 @@
 ---
-name: deploy on aws instance backend
+name: deploy on aws ec2 backend
 on:
   push:
     branches:
@@ -29,9 +29,10 @@ jobs:
       - name: login gihub package
         run: docker login ${{ env.REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} --password ${{ secrets.REGISTRY_TOKEN }}
       - name: create build image
-        run: docker build  -t ${{ env.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc61-backend:${{ github.sha }} .
+        run: docker build  -t ${{ env.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc26-backend:${{ github.sha }} .
       - name: pushing image to github package
-        run: docker push ${{ env.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc61-backend:${{ github.sha }}
+        run: docker push ${{ env.REGISTRY }}/${{ secrets.REGISTRY_USERNAME }}/bc26-backend:${{ github.sha }}
+
       - name: ssh connect to ec2 server
         env:
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
@@ -43,8 +44,9 @@ jobs:
 
             docker login ${{ env.REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} --password ${{ secrets.REGISTRY_TOKEN }}
             docker stop backend 2>/dev/null;
-            docker run -d -p 8080:8080 --name backend ghcr.io/suneelchenna/bc26-backend:${{ github.sha }} 
+            docker run -d -p 8080:8080 --network host --name backend ghcr.io/suneelchenna/bc26-backend:${{ github.sha }} 
             '
+
           
           
 
