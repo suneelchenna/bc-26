@@ -46,7 +46,7 @@ jobs:
             docker login ${{ env.REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} --password ${{ secrets.REGISTRY_TOKEN }}
             docker stop frontend 2>/dev/null;
             docker rm -f frontend 2>/dev/null; 
-            docker run -d -p 3000:80 --name frontend $bc26-frontend:${{ github.sha }} 
+            docker run -d -p 3000:80 --name frontend bc26-frontend:${{ github.sha }} 
             '
 
 
