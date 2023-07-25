@@ -67,7 +67,7 @@ jobs:
           ssh -i ~/ssh_private_key -o StrictHostKeyChecking=no ubuntu@$REMOTE_HOST '
             
             docker login ${{ env.REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} --password ${{ secrets.REGISTRY_TOKEN }}
-            cd /home/ubuntu/bc26 &&
+            cd /home/ubuntu/bc-26 &&
             docker-compose down &&
             docker-compose up -d
             '
